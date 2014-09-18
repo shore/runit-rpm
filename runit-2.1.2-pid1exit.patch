@@ -1,25 +1,27 @@
-diff -ur admin/runit-2.1.2/src/runit.c admin.org/runit-2.1.2/src/runit.c
---- admin/runit-2.1.2/src/runit.c	2014-09-18 15:40:10.000000000 +0000
-+++ admin.org/runit-2.1.2/src/runit.c	2014-08-10 18:22:35.000000000 +0000
-@@ -339,13 +339,6 @@
+diff -ur admin.org/runit-2.1.2/src/runit.c admin/runit-2.1.2/src/runit.c
+--- admin.org/runit-2.1.2/src/runit.c	2014-08-10 18:22:35.000000000 +0000
++++ admin/runit-2.1.2/src/runit.c	2014-09-18 20:07:14.000000000 +0000
+@@ -339,6 +339,13 @@
    }
  #endif
  
--
--  if ((stat(PID1EXIT, &s) != -1) && (s.st_mode & S_IXUSR)) {
--    strerr_warn2(INFO, "PID 1 exiting.", 0);
--    sync();
--	strerr_die2x(0, INFO, "exit.");
--  }
--
++
++  if ((stat(PID1EXIT, &s) != -1) && (s.st_mode & S_IXUSR)) {
++    strerr_warn2(INFO, "PID 1 exiting.", 0);
++    sync();
++	strerr_die2x(0, INFO, "exit.");
++  }
++
    for (;;) sig_pause();
    /* not reached */
    strerr_die2x(0, INFO, "exit.");
-diff -ur admin/runit-2.1.2/src/runit.h admin.org/runit-2.1.2/src/runit.h
---- admin/runit-2.1.2/src/runit.h	2014-09-18 15:40:10.000000000 +0000
-+++ admin.org/runit-2.1.2/src/runit.h	2014-08-10 18:22:35.000000000 +0000
-@@ -2,4 +2,3 @@
+Only in admin/runit-2.1.2/src: runit.c.orig
+diff -ur admin.org/runit-2.1.2/src/runit.h admin/runit-2.1.2/src/runit.h
+--- admin.org/runit-2.1.2/src/runit.h	2014-08-10 18:22:35.000000000 +0000
++++ admin/runit-2.1.2/src/runit.h	2014-09-18 20:07:16.000000000 +0000
+@@ -2,3 +2,4 @@
  #define STOPIT "/etc/runit/stopit"
  #define REBOOT "/etc/runit/reboot"
  #define CTRLALTDEL "/etc/runit/ctrlaltdel"
--#define PID1EXIT "/etc/runit/pid1exit"
++#define PID1EXIT "/etc/runit/pid1exit"
+Only in admin/runit-2.1.2/src: runit.h.orig
