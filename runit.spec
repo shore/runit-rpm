@@ -61,6 +61,8 @@ popd
 sh package/compile
 
 %install
+%{__rm} -rf %{buildroot}
+
 EXTRA_FILES=$RPM_BUILD_ROOT/extra_files
 touch %{EXTRA_FILES}
 
