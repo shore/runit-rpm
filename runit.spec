@@ -158,7 +158,7 @@ fi
 %{_sbindir}/svlogd
 %{_sbindir}/utmpset
 %{_mandir}/man8/*.8*
-%doc doc/* etc/
+%doc doc/*
 %doc package/CHANGES package/COPYING package/README package/THANKS package/TODO
 %dir /service
 %dir /etc/service
