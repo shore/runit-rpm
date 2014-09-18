@@ -24,6 +24,7 @@ Source1:        runsvdir-start.service
 Source2:        1
 Source3:        2
 Source4:        3
+Patch0:         runit-2.1.2-pid1exit.patch
 
 Obsoletes: runit <= %{version}-%{release}
 Provides: runit = %{version}-%{release}
@@ -56,6 +57,7 @@ pushd src
 echo "%{?_with_dietlibc:diet -Os }%__cc $RPM_OPT_FLAGS" >conf-cc
 echo "%{?_with_dietlibc:diet -Os }%__cc -Os -pipe"      >conf-ld
 popd
+%patch0 -p 2
 
 %build
 sh package/compile
