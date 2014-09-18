@@ -4,7 +4,7 @@
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 touch /etc/runit/stopit
-chmod 0 /etc/runit/stopit
+chmod 0100 /etc/runit/stopit
 
 # run all one-time tasks from .d/
 ls -1 /etc/runit/1.d/ |while read filename; do "$filename" ; done
