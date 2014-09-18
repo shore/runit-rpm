@@ -15,7 +15,6 @@ diff -ur admin.org/runit-2.1.2/src/runit.c admin/runit-2.1.2/src/runit.c
    for (;;) sig_pause();
    /* not reached */
    strerr_die2x(0, INFO, "exit.");
-Only in admin/runit-2.1.2/src: runit.c.orig
 diff -ur admin.org/runit-2.1.2/src/runit.h admin/runit-2.1.2/src/runit.h
 --- admin.org/runit-2.1.2/src/runit.h	2014-08-10 18:22:35.000000000 +0000
 +++ admin/runit-2.1.2/src/runit.h	2014-09-18 20:07:16.000000000 +0000
@@ -24,4 +23,37 @@ diff -ur admin.org/runit-2.1.2/src/runit.h admin/runit-2.1.2/src/runit.h
  #define REBOOT "/etc/runit/reboot"
  #define CTRLALTDEL "/etc/runit/ctrlaltdel"
 +#define PID1EXIT "/etc/runit/pid1exit"
-Only in admin/runit-2.1.2/src: runit.h.orig
+diff -ur admin.org/runit-2.1.2/doc/runit.8.html admin/runit-2.1.2/doc/runit.8.html
+--- admin.org/runit-2.1.2/doc/runit.8.html      2014-08-10 18:22:36.000000000 +0000
++++ admin/runit-2.1.2/doc/runit.8.html  2014-09-18 21:09:01.000000000 +0000
+@@ -33,7 +33,9 @@
+ stage 2 if it is running, and runs <i>/etc/runit/3</i>. The systems tasks to shutdown
+ and possibly halt or reboot the system are done here. If stage 3 returns,
+ <b>runit</b> checks if the file <i>/etc/runit/reboot</i> exists and has the execute by
+-owner permission set. If so, the system is rebooted, it&rsquo;s halted otherwise.
++owner permission set. If so, the system is rebooted.  If <i>/etc/runit/pid1exit</i> exists and
++has the execute by owner permission set, runit will exit.  It&rsquo;s halted otherwise.  Ensure
++you understand the implications of PID 1 exiting before instructing <b>runit</b> to do so.
+
+ <h2><a name='sect6'>Ctrl-alt-del</a></h2>
+ If <b>runit</b> receives the ctrl-alt-del keyboard request and the file
+diff -ur admin.org/runit-2.1.2/man/runit.8 admin/runit-2.1.2/man/runit.8
+--- admin.org/runit-2.1.2/man/runit.8   2014-08-10 18:22:34.000000000 +0000
++++ admin/runit-2.1.2/man/runit.8       2014-09-18 21:20:24.000000000 +0000
+@@ -47,7 +47,15 @@
+ checks if the file
+ .I /etc/runit/reboot
+ exists and has the execute by owner permission set.
+-If so, the system is rebooted, it's halted otherwise.
++If so, the system is rebooted.  If the file
++.I /etc/runit/pid1exit
++exists and has the execute by owner permission set,
++.B runit
++will exit.  It's halted otherwise.  Ensure you understand the implications
++of PID 1 exiting before instructing
++.B runit
++to do so.
++
+ .SH CTRL-ALT-DEL
+ If
+ .B runit
