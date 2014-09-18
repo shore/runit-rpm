@@ -21,6 +21,9 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Url:            http://smarden.org/runit/
 Source0:        http://smarden.org/runit/runit-%{version}.tar.gz
 Source1:        runsvdir-start.service
+Source2:        1
+Source3:        2
+Source4:        3
 
 Obsoletes: runit <= %{version}-%{release}
 Provides: runit = %{version}-%{release}
@@ -67,8 +70,16 @@ done
 for i in man/*8 ; do
     %{__install} -D -m 0755 $i %{buildroot}%{_mandir}/man8/${i##man/}
 done
+
+%{__install} -d -m 0755 %{buildroot}/service
 %{__install} -d -m 0755 %{buildroot}/etc/service
-%{__install} -D -m 0750 etc/2 %{buildroot}%{_sbindir}/runsvdir-start
+%{__install} -d -m 0755 %{buildroot}/etc/runit
+%{__install} -d -m 0755 %{buildroot}/etc/runit/1.d
+%{__install} -d -m 0755 %{buildroot}/etc/runit/3.d
+%{__install}    -m 0755 $RPM_SOURCE_DIR/1 %{buildroot}/etc/runit/1
+%{__install}    -m 0755 $RPM_SOURCE_DIR/2 %{buildroot}/etc/runit/2
+%{__install}    -m 0755 $RPM_SOURCE_DIR/3 %{buildroot}/etc/runit/3
+
 
 # For systemd only
 %if 0%{?rhel} >= 7
@@ -144,11 +155,17 @@ fi
 %{_sbindir}/sv
 %{_sbindir}/svlogd
 %{_sbindir}/utmpset
-%{_sbindir}/runsvdir-start
 %{_mandir}/man8/*.8*
 %doc doc/* etc/
 %doc package/CHANGES package/COPYING package/README package/THANKS package/TODO
+%dir /service
 %dir /etc/service
+%dir /etc/runit
+%dir /etc/runit/1.d
+%dir /etc/runit/3.d
+/etc/runit/1
+/etc/runit/2
+/etc/runit/3
 
 %changelog
 * Thu Aug 21 2014 Chris Gaffney <gaffneyc@gmail.com> 2.1.2-1
