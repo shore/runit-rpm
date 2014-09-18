@@ -95,6 +95,8 @@ echo %{_unitdir}/runsvdir-start.service > %{EXTRA_FILES}
 
 %post
 if [ $1 = 1 ] ; then
+  /bin/ln -vsf /etc/runit/2 /sbin/runsvdir-start
+
   %if 0%{?rhel} >= 6 <= 7
     rpm --queryformat='%%{name}' -qf /sbin/init | grep -q upstart
     if [ $? -eq 0 ]; then
@@ -136,6 +138,8 @@ fi
 
 %postun
 if [ $1 = 0 ]; then
+  /bin/rm -vf /sbin/runsvdir-start
+
   if [ -f /etc/init/runsvdir.conf ]; then
     rm -f /etc/init/runsvdir.conf
   else
