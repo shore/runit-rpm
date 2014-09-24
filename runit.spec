@@ -110,13 +110,7 @@ normal exit 0 111
 respawn
 exec /sbin/runsvdir-start
 EOT
-    # tell init to start the new service
-      start runsvdir
     fi
-  %endif
-
-  %if 0%{?rhel} > 7
-    systemctl start runsvdir-start
   %endif
 
   %if 0%{?rhel} < 6
@@ -125,8 +119,6 @@ EOT
       echo -n "Installing /sbin/runsvdir-start into /etc/inittab.."
       echo "RI:2345:respawn:/sbin/runsvdir-start" >> /etc/inittab
       echo " success."
-      # Reload init
-      telinit q
     fi
   %endif
 fi
