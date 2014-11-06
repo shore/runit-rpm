@@ -15,6 +15,7 @@ if [ ! -f "$(which rpmdev-setuptree)" ]; then echo "please install 'rpmdevtools'
 cp -f ${whereami}/runit.spec $TOPDIR/SPECS/
 cp -f ${whereami}/*.patch    $TOPDIR/SOURCES/
 cp -f ${whereami}/{1,2,3}    $TOPDIR/SOURCES/
+cp -f ${whereami}/runit.init $TOPDIR/SOURCES/
 cp -f ${whereami}/runsvdir-start.service    $TOPDIR/SOURCES/
 /usr/bin/spectool -C $TOPDIR/SOURCES/ -g ${whereami}/runit.spec 
 

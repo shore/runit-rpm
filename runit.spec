@@ -8,7 +8,7 @@
 
 Name:           runit
 Version:        2.1.2
-Release:        2%{?_with_dietlibc:diet}%{?dist}.pharos
+Release:        3%{?_with_dietlibc:diet}%{?dist}.pharos
 
 Group:          System/Base
 License:        BSD
@@ -24,6 +24,7 @@ Source1:        runsvdir-start.service
 Source2:        1
 Source3:        2
 Source4:        3
+Source5:        runit.init
 Patch0:         runit-2.1.2-pid1exit.patch
 
 Obsoletes: runit <= %{version}-%{release}
@@ -83,6 +84,7 @@ done
 %{__install}    -m 0755 $RPM_SOURCE_DIR/1 %{buildroot}/etc/runit/1
 %{__install}    -m 0755 $RPM_SOURCE_DIR/2 %{buildroot}/etc/runit/2
 %{__install}    -m 0755 $RPM_SOURCE_DIR/3 %{buildroot}/etc/runit/3
+%{__install} -D -m 0755 $RPM_SOURCE_DIR/runit.init %{buildroot}%{_initddir}/%{name}
 
 
 # For systemd only
@@ -99,7 +101,7 @@ echo %{_unitdir}/runsvdir-start.service > %{EXTRA_FILES}
 if [ $1 = 1 ] ; then
   /bin/ln -vsf /etc/runit/2 /sbin/runsvdir-start
 
-  %if 0%{?rhel} >= 6 <= 7
+  %if 0%{?rhel} > 6
     rpm --queryformat='%%{name}' -qf /sbin/init | grep -q upstart
     if [ $? -eq 0 ]; then
       cat >/etc/init/runsvdir.conf <<\EOT
@@ -113,13 +115,8 @@ EOT
     fi
   %endif
 
-  %if 0%{?rhel} < 6
-    grep -q 'RI:2345:respawn:/sbin/runsvdir-start' /etc/inittab
-    if [ $? -eq 1 ]; then
-      echo -n "Installing /sbin/runsvdir-start into /etc/inittab.."
-      echo "RI:2345:respawn:/sbin/runsvdir-start" >> /etc/inittab
-      echo " success."
-    fi
+  %if 0%{?rhel} <= 6
+    /sbin/chkconfig --add runit
   %endif
 fi
 
@@ -127,6 +124,8 @@ fi
 if [ $1 = 0 ]; then
   if [ -f /etc/init/runsvdir.conf ]; then
     stop runsvdir
+  elif [ -f /etc/init.d/runit ]; then
+    /sbin/chkconfig --del runit
   fi
 fi
 
@@ -136,11 +135,6 @@ if [ $1 = 0 ]; then
 
   if [ -f /etc/init/runsvdir.conf ]; then
     rm -f /etc/init/runsvdir.conf
-  else
-    echo " #################################################"
-    echo " # Remove /sbin/runsvdir-start from /etc/inittab #"
-    echo " # if you really want to remove runit            #"
-    echo " #################################################"
   fi
 fi
 
@@ -166,6 +160,7 @@ fi
 /etc/runit/1
 /etc/runit/2
 /etc/runit/3
+%{_initddir}/runit
 
 %changelog
 * Thu Aug 21 2014 Chris Gaffney <gaffneyc@gmail.com> 2.1.2-1
