@@ -35,6 +35,9 @@ BuildRequires: make gcc
 BuildRequires:  glibc-static
 %endif
 
+Requires: coreutils bash
+PreReq: bash chkconfig coreutils grep rpm
+
 %{?_with_dietlibc:BuildRequires:        dietlibc}
 
 Summary:        A UNIX init scheme with service supervision
