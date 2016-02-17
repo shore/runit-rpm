@@ -8,7 +8,7 @@
 
 Name:           runit
 Version:        2.1.2
-Release:        3%{?_with_dietlibc:diet}%{?dist}.pharos
+Release:        3%{?_with_dietlibc:diet}%{?dist}.seastar
 
 Group:          System/Base
 License:        BSD
