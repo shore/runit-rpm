@@ -2,6 +2,7 @@
 # spec file for package runit (Version 2.1.2)
 #
 # Copyright (c) 2010 Ian Meyer <ianmmeyer@gmail.com>
+# Copyright (c) 2014 Brian Shore <beath-pub@uma.litech.org>
 
 ## This package understands the following switches:
 ## --with dietlibc ...  statically links against dietlibc
