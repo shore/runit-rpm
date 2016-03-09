@@ -83,6 +83,7 @@ done
 %{__install} -d -m 0755 %{buildroot}/service
 %{__install} -d -m 0755 %{buildroot}/etc/service
 %{__install} -d -m 0755 %{buildroot}/etc/runit
+%{__install} -d -m 0755 %{buildroot}/etc/runit/envdir-runsvdir
 %{__install} -d -m 0755 %{buildroot}/etc/runit/1.d
 %{__install} -d -m 0755 %{buildroot}/etc/runit/3.d
 %{__install}    -m 0755 $RPM_SOURCE_DIR/1 %{buildroot}/etc/runit/1
@@ -159,6 +160,7 @@ fi
 %dir /service
 %dir /etc/service
 %dir /etc/runit
+%dir /etc/runit/envdir-runsvdir
 %dir /etc/runit/1.d
 %dir /etc/runit/3.d
 /etc/runit/1
