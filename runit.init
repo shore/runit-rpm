@@ -43,7 +43,12 @@ start() {
     local shortname=${PROG##*/}
     echo -n $"Starting $shortname: "
 
-    $PROG -P ${SVDIR} "$logspace" &
+    local envset=""
+    if [ -d /etc/runit/envdir-runsvdir ]; then
+        envset="/sbin/chpst -e /etc/runit/envdir-runsvdir"
+    fi
+
+    $envset $PROG -P ${SVDIR} "$logspace" &
     echo $! > "$PIDFILE"
     if checkpid $!; then
         success $shortname
