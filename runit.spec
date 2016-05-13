@@ -104,7 +104,7 @@ echo %{_unitdir}/runsvdir-start.service > %{EXTRA_FILES}
 
 %post
 if [ $1 = 1 ] ; then
-  /bin/ln -vsf /etc/runit/2 /sbin/runsvdir-start
+  /bin/ln -sf /etc/runit/2 /sbin/runsvdir-start
 
   %if 0%{?rhel} > 6
     /bin/rpm --queryformat='%%{name}' -qf /sbin/init | /bin/grep -q upstart
