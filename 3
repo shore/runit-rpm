@@ -11,6 +11,6 @@ sv -w196 force-stop /service/*
 sv exit /service/*
 
 # run all one-time tasks from .d/
-/bin/ls -1 /etc/runit/3.d/ |while read filename; do "$filename" ; done
+/bin/ls -1 /etc/runit/3.d/ |while read filename; do "/etc/runit/3.d/$filename" ; done
 
 #

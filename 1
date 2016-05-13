@@ -7,5 +7,5 @@ touch /etc/runit/stopit
 chmod 0100 /etc/runit/stopit
 
 # run all one-time tasks from .d/
-ls -1 /etc/runit/1.d/ |while read filename; do "$filename" ; done
+ls -1 /etc/runit/1.d/ |while read filename; do "/etc/runit/1.d/$filename" ; done
 
