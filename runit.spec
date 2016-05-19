@@ -9,7 +9,7 @@
 
 Name:           runit
 Version:        2.1.2
-Release:        7%{?_with_dietlibc:diet}%{?dist}.seastar
+Release:        8%{?_with_dietlibc:diet}%{?dist}.seastar
 
 Group:          System/Base
 License:        BSD
